@@ -78,34 +78,6 @@ class AppSettings:
     @cached_property
     def CHALLENGE_VALID_SECONDS(self):  # pylint: disable=invalid-name
         return self._setting("CHALLENGE_VALID_SECONDS", 60)
-    
-    @cached_property
-    def USE_LDAP(self): # pylint: disable=invalid-name
-        return self._setting("USE_LDAP", False)
-
-    @cached_property
-    def LDAP_FILTER(self): # pylint: disable=invalid-name
-        return self._setting("LDAP_FILTER", "")
-
-    @cached_property
-    def LDAP_SEARCH_BASE(self): # pylint: disable=invalid-name
-        return self._setting("LDAP_SEARCH_BASE", "")
-
-    @cached_property
-    def LDAP_SERVER(self): # pylint: disable=invalid-name
-        return self._setting("LDAP_SERVER", "")
-
-    @cached_property
-    def LDAP_BIND_DN(self): # pylint: disable=invalid-name
-        return self._setting("LDAP_BIND_DN", "")
-
-    @cached_property
-    def LDAP_BIND_PASSWORD(self): # pylint: disable=invalid-name
-        return self._setting("LDAP_BIND_PW", "")
-
-    @cached_property
-    def LDAP_SEARCH_BASE(self): # pylint: disable=invalid-name
-        return self._setting("LDAP_SEARCH_BASE", "")
 
 
 app_settings = AppSettings('ETEBASE_')

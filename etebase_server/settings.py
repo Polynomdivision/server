@@ -166,14 +166,11 @@ if any(os.path.isfile(x) for x in config_locations):
 
     if 'ldap' in config:
         ldap = config['ldap']
-        ETEBASE_USE_LDAP = True
-        ETEBASE_LDAP_SERVER = ldap.get('server', '')
-        ETEBASE_LDAP_SEARCH_BASE = ldap.get('search_base', '')
-        ETEBASE_LDAP_FILTER = ldap.get('filter', '')
-        ETEBASE_LDAP_BIND_DN = ldap.get('bind_dn', '')
-        ETEBASE_LDAP_BIND_PW = ldap.get('bind_pw', '')
-    else:
-        ETEBASE_USE_LDAP = False
+        LDAP_SERVER = ldap.get('server', '')
+        LDAP_SEARCH_BASE = ldap.get('search_base', '')
+        LDAP_FILTER = ldap.get('filter', '')
+        LDAP_BIND_DN = ldap.get('bind_dn', '')
+        LDAP_BIND_PW = ldap.get('bind_pw', '')
 
 ETEBASE_API_PERMISSIONS = ('rest_framework.permissions.IsAuthenticated', )
 ETEBASE_API_AUTHENTICATORS = ('django_etebase.token_auth.authentication.TokenAuthentication',

@@ -1,14 +1,10 @@
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from .. import app_settings
 
 from rest_framework import exceptions
 from rest_framework.authentication import TokenAuthentication as DRFTokenAuthentication
 
 from .models import AuthToken, get_default_expiry
-
-if app_settings.USE_LDAP:
-    from ..ldap import LDAPConnection
 
 
 AUTO_REFRESH = True
@@ -25,10 +21,6 @@ class TokenAuthentication(DRFTokenAuthentication):
             token = model.objects.select_related('user').get(key=key)
         except model.DoesNotExist:
             raise exceptions.AuthenticationFailed(msg)
-
-        if app_settings.USE_LDAP:
-            if not LDAPConnection.get_instance().has_user(token.user.username):
-                raise exceptions.AuthenticationFailed('User is not listed in the LDAP registry.')
 
         if not token.user.is_active:
             raise exceptions.AuthenticationFailed(_('User inactive or deleted.'))
