@@ -164,6 +164,17 @@ if any(os.path.isfile(x) for x in config_locations):
     if 'database' in config:
         DATABASES = { 'default': { x.upper(): y for x, y in config.items('database') } }
 
+    if 'ldap' in config:
+        ldap = config['ldap']
+        ETEBASE_USE_LDAP = True
+        ETEBASE_LDAP_SERVER = ldap.get('server', '')
+        ETEBASE_LDAP_SEARCH_BASE = ldap.get('search_base', '')
+        ETEBASE_LDAP_FILTER = ldap.get('filter', '')
+        ETEBASE_LDAP_BIND_DN = ldap.get('bind_dn', '')
+        ETEBASE_LDAP_BIND_PW = ldap.get('bind_pw', '')
+    else:
+        ETEBASE_USE_LDAP = False
+
 ETEBASE_API_PERMISSIONS = ('rest_framework.permissions.IsAuthenticated', )
 ETEBASE_API_AUTHENTICATORS = ('django_etebase.token_auth.authentication.TokenAuthentication',
                               'rest_framework.authentication.SessionAuthentication')
