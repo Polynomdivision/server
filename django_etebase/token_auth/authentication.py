@@ -10,6 +10,7 @@ from .models import AuthToken, get_default_expiry
 AUTO_REFRESH = True
 MIN_REFRESH_INTERVAL = 60
 
+
 class TokenAuthentication(DRFTokenAuthentication):
     keyword = 'Token'
     model = AuthToken
