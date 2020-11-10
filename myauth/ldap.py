@@ -81,7 +81,7 @@ class LDAPUserExists(BasePermission):
     exists.
     '''
     def has_permission(self, request, view):
-        return LDAPConnection.get_instance().has_user(request.user.username):
+        return LDAPConnection.get_instance().has_user(request.user.username)
 
 def create_user(*args, **kwargs):
     '''
