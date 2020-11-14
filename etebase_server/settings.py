@@ -96,10 +96,18 @@ WSGI_APPLICATION = "etebase_server.wsgi.application"
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
@@ -128,10 +136,12 @@ STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", os.path.join(BASE_DIR, "stati
 MEDIA_ROOT = os.environ.get("DJANGO_MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
 MEDIA_URL = "/user-media/"
 
-ETEBASE_API_PERMISSIONS = ['rest_framework.permissions.IsAuthenticated']
-ETEBASE_API_AUTHENTICATORS = ('django_etebase.token_auth.authentication.TokenAuthentication',
-                              'rest_framework.authentication.SessionAuthentication')
-ETEBASE_CREATE_USER_FUNC = 'django_etebase.utils.create_user_blocked'
+ETEBASE_API_PERMISSIONS = ["rest_framework.permissions.IsAuthenticated"]
+ETEBASE_API_AUTHENTICATORS = (
+    "django_etebase.token_auth.authentication.TokenAuthentication",
+    "rest_framework.authentication.SessionAuthentication",
+)
+ETEBASE_CREATE_USER_FUNC = "django_etebase.utils.create_user_blocked"
 
 # Define where to find configuration files
 config_locations = [
@@ -169,17 +179,17 @@ if any(os.path.isfile(x) for x in config_locations):
     if "database" in config:
         DATABASES = {"default": {x.upper(): y for x, y in config.items("database")}}
 
-    if 'ldap' in config:
-        ldap = config['ldap']
-        LDAP_SERVER = ldap.get('server', '')
-        LDAP_SEARCH_BASE = ldap.get('search_base', '')
-        LDAP_FILTER = ldap.get('filter', '')
-        LDAP_BIND_DN = ldap.get('bind_dn', '')
-        LDAP_BIND_PW = ldap.get('bind_pw', '')
+    if "ldap" in config:
+        ldap = config["ldap"]
+        LDAP_SERVER = ldap.get("server", "")
+        LDAP_SEARCH_BASE = ldap.get("search_base", "")
+        LDAP_FILTER = ldap.get("filter", "")
+        LDAP_BIND_DN = ldap.get("bind_dn", "")
+        LDAP_BIND_PW = ldap.get("bind_pw", "")
 
         # Configure EteBase to use LDAP
-        ETEBASE_CREATE_USER_FUNC = 'myauth.ldap.create_user'
-        ETEBASE_API_PERMISSIONS.append('myauth.ldap.LDAPUserExists')
+        ETEBASE_CREATE_USER_FUNC = "myauth.ldap.create_user"
+        ETEBASE_API_PERMISSIONS.append("myauth.ldap.LDAPUserExists")
 
 # Make an `etebase_server_settings` module available to override settings.
 try:
