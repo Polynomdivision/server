@@ -3,7 +3,9 @@
   <h1 align="center">Etebase - Encrypt Everything</h1>
 </p>
 
-A skeleton app for running your own [Etebase](https://www.etebase.com) (EteSync 2.0) server.
+An [Etebase](https://www.etebase.com) (EteSync 2.0) server so you can run your own.
+
+[![Chat with us](https://img.shields.io/badge/chat-IRC%20|%20Matrix%20|%20Web-blue.svg)](https://www.etebase.com/community-chat/)
 
 # Installation
 
@@ -32,9 +34,9 @@ pip install -r requirements.txt
 
 # Configuration
 
-If you are familiar with Django you can just edit the [settings file](etesync_server/settings.py)
+If you are familiar with Django you can just edit the [settings file](etebase_server/settings.py)
 according to the [Django deployment checklist](https://docs.djangoproject.com/en/dev/howto/deployment/checklist/).
-If you are not, we also provide a simple [configuration file](https://github.com/etesync/server/blob/etebase/etebase-server.ini.example) for easy deployment which you can use.
+If you are not, we also provide a simple [configuration file](etebase-server.ini.example) for easy deployment which you can use.
 To use the easy configuration file rename it to `etebase-server.ini` and place it either at the root of this repository or in `/etc/etebase-server`.
 
 There is also a [wikipage](https://github.com/etesync/server/wiki/Basic-Setup-Etebase-(EteSync-v2)) detailing this basic setup.
@@ -84,10 +86,9 @@ Create yourself an admin user:
 ```
 
 At this stage you need to create accounts to be used with the EteSync apps. To do that, please go to:
-`www.your-etesync-install.com/admin` and create a new user to be used with the service. Set a random
-password for the user such as `j3PmCRftyQMtM3eWvi8f`. No need to remember it, as it won't be used.
-Etebase uses a zero-knowledge proof for authentication, so the user will just create a password when
-creating the account from the apps.
+`www.your-etesync-install.com/admin` and create a new user to be used with the service. No need to set
+a password, as Etebase uses a zero-knowledge proof for authentication, so the user will just create
+a password when creating the account from the apps.
 
 After this user has been created, you can use any of the EteSync apps to signup (or login) with the same username and
 email in order to set up the account. The password used at that point will be used to setup the account.
