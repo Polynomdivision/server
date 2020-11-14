@@ -150,13 +150,6 @@ config_locations = [
     "/etc/etebase-server/etebase-server.ini",
 ]
 
-ETEBASE_API_PERMISSIONS = ("rest_framework.permissions.IsAuthenticated",)
-ETEBASE_API_AUTHENTICATORS = (
-    "django_etebase.token_auth.authentication.TokenAuthentication",
-    "rest_framework.authentication.SessionAuthentication",
-)
-ETEBASE_CREATE_USER_FUNC = "django_etebase.utils.create_user_blocked"
-
 # Use config file if present
 if any(os.path.isfile(x) for x in config_locations):
     config = configparser.ConfigParser()
