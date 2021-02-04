@@ -11,6 +11,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
+import typing as t
+
 from django.utils.functional import cached_property
 
 
@@ -32,22 +34,20 @@ class AppSettings:
         return getattr(settings, self.prefix + name, dflt)
 
     @cached_property
-    def API_PERMISSIONS(self):  # pylint: disable=invalid-name
-        perms = self._setting("API_PERMISSIONS", ("rest_framework.permissions.IsAuthenticated",))
+    def REDIS_URI(self) -> t.Optional[str]:  # pylint: disable=invalid-name
+        return self._setting("REDIS_URI", None)
+
+    @cached_property
+    def API_PERMISSIONS_READ(self):  # pylint: disable=invalid-name
+        perms = self._setting("API_PERMISSIONS_READ", tuple())
         ret = []
         for perm in perms:
             ret.append(self.import_from_str(perm))
         return ret
 
     @cached_property
-    def API_AUTHENTICATORS(self):  # pylint: disable=invalid-name
-        perms = self._setting(
-            "API_AUTHENTICATORS",
-            (
-                "rest_framework.authentication.TokenAuthentication",
-                "rest_framework.authentication.SessionAuthentication",
-            ),
-        )
+    def API_PERMISSIONS_WRITE(self):  # pylint: disable=invalid-name
+        perms = self._setting("API_PERMISSIONS_WRITE", tuple())
         ret = []
         for perm in perms:
             ret.append(self.import_from_str(perm))

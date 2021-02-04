@@ -1,7 +1,8 @@
 django
-django-cors-headers
-djangorestframework
-drf-nested-routers
 msgpack
-psycopg2-binary
 pynacl
+fastapi
+typing_extensions
+uvicorn[standard]
+aiofiles
+aioredis
