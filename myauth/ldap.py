@@ -3,12 +3,13 @@ import logging
 from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth import get_user_model
+from django_etebase.utils import CallbackContext
+from myauth.models import get_typed_user_model
 from rest_framework.permissions import BasePermission
 
 import ldap
 
-User = get_user_model()
+User = get_typed_user_model()
 
 def ldap_setting(name, default):
     """Wrapper around django.conf.settings"""
@@ -85,12 +86,11 @@ class LDAPUserExists(BasePermission):
     def has_permission(self, request, view):
         return LDAPConnection.get_instance().has_user(request.user.username)
 
-def create_user(*args, **kwargs):
+def create_user(context: CallbackContext, *args, **kwargs):
     """
     A create_user function which first checks if the user already exists in the
     configured LDAP directory.
     """
     if not LDAPConnection.get_instance().has_user(kwargs["username"]):
         raise PermissionDenied("User not in the LDAP directory.")
-    _ = kwargs.pop("view")
     return User.objects.create_user(*args, **kwargs)

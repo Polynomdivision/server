@@ -143,6 +143,8 @@ config_locations = [
     "/etc/etebase-server/etebase-server.ini",
 ]
 
+ETEBASE_CREATE_USER_FUNC = "django_etebase.utils.create_user_blocked"
+
 # Use config file if present
 if any(os.path.isfile(x) for x in config_locations):
     config = configparser.ConfigParser()
@@ -179,8 +181,6 @@ if any(os.path.isfile(x) for x in config_locations):
         # Configure EteBase to use LDAP
         ETEBASE_CREATE_USER_FUNC = "myauth.ldap.create_user"
         ETEBASE_API_PERMISSIONS.append("myauth.ldap.LDAPUserExists")
-
-ETEBASE_CREATE_USER_FUNC = "django_etebase.utils.create_user_blocked"
 
 # Efficient file streaming (for large files)
 SENDFILE_BACKEND = "django_etebase.sendfile.backends.simple"
