@@ -80,7 +80,7 @@ class LDAPConnection:
 
 def is_user_in_ldap(user: UserType = Depends(get_authenticated_user)):
     if not LDAPConnection.get_instance().has_user(user.username):
-        raise PermissionDenied("User not in LDAP directory.")
+        raise PermissionDenied(detail="User not in LDAP directory.")
 
 def create_user(context: CallbackContext, *args, **kwargs):
     """
