@@ -130,7 +130,6 @@ STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", os.path.join(BASE_DIR, "stati
 MEDIA_ROOT = os.environ.get("DJANGO_MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
 MEDIA_URL = "/user-media/"
 
-ETEBASE_API_PERMISSIONS = ["rest_framework.permissions.IsAuthenticated"]
 ETEBASE_API_AUTHENTICATORS = (
     "django_etebase.token_auth.authentication.TokenAuthentication",
     "rest_framework.authentication.SessionAuthentication",
@@ -142,8 +141,6 @@ config_locations = [
     "etebase-server.ini",
     "/etc/etebase-server/etebase-server.ini",
 ]
-
-ETEBASE_CREATE_USER_FUNC = "django_etebase.utils.create_user_blocked"
 
 # Use config file if present
 if any(os.path.isfile(x) for x in config_locations):
@@ -180,7 +177,7 @@ if any(os.path.isfile(x) for x in config_locations):
 
         # Configure EteBase to use LDAP
         ETEBASE_CREATE_USER_FUNC = "myauth.ldap.create_user"
-        ETEBASE_API_PERMISSIONS.append("myauth.ldap.LDAPUserExists")
+        ETEBASE_API_PERMISSIONS_READ = ["myauth.ldap.is_user_in_ldap"]
 
 # Efficient file streaming (for large files)
 SENDFILE_BACKEND = "django_etebase.sendfile.backends.simple"

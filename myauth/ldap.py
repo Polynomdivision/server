@@ -4,8 +4,10 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django_etebase.utils import CallbackContext
-from myauth.models import get_typed_user_model
-from rest_framework.permissions import BasePermission
+from myauth.models import get_typed_user_model, UserType
+from etebase_fastapi.dependencies import get_authenticated_user
+from etebase_fastapi.exceptions import PermissionDenied
+from fastapi import Depends
 
 import ldap
 
@@ -76,15 +78,9 @@ class LDAPConnection:
             return True
         return False
 
-
-class LDAPUserExists(BasePermission):
-    """
-    A permission check which first checks with the LDAP directory if the user
-    exists.
-    """
-
-    def has_permission(self, request, view):
-        return LDAPConnection.get_instance().has_user(request.user.username)
+def is_user_in_ldap(user: UserType = Depends(get_authenticated_user)):
+    if not LDAPConnection.get_instance().has_user(user.username):
+        raise PermissionDenied("User not in LDAP directory.")
 
 def create_user(context: CallbackContext, *args, **kwargs):
     """
