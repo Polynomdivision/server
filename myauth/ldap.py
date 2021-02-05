@@ -2,11 +2,11 @@ import logging
 
 from django.utils import timezone
 from django.conf import settings
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied as DjangoPermissionDenied
 from django_etebase.utils import CallbackContext
 from myauth.models import get_typed_user_model, UserType
 from etebase_fastapi.dependencies import get_authenticated_user
-from etebase_fastapi.exceptions import PermissionDenied
+from etebase_fastapi.exceptions import PermissionDenied as FastAPIPermissionDenied
 from fastapi import Depends
 
 import ldap
@@ -82,7 +82,7 @@ class LDAPConnection:
 
 def is_user_in_ldap(user: UserType = Depends(get_authenticated_user)):
     if not LDAPConnection.get_instance().has_user(user.username):
-        raise PermissionDenied(detail="User not in LDAP directory.")
+        raise FastAPIPermissionDenied(detail="User not in LDAP directory.")
 
 
 def create_user(context: CallbackContext, *args, **kwargs):
@@ -91,5 +91,5 @@ def create_user(context: CallbackContext, *args, **kwargs):
     configured LDAP directory.
     """
     if not LDAPConnection.get_instance().has_user(kwargs["username"]):
-        raise PermissionDenied("User not in the LDAP directory.")
+        raise DjangoPermissionDenied("User not in the LDAP directory.")
     return User.objects.create_user(*args, **kwargs)
