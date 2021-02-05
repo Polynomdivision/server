@@ -130,10 +130,6 @@ STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", os.path.join(BASE_DIR, "stati
 MEDIA_ROOT = os.environ.get("DJANGO_MEDIA_ROOT", os.path.join(BASE_DIR, "media"))
 MEDIA_URL = "/user-media/"
 
-ETEBASE_API_AUTHENTICATORS = (
-    "django_etebase.token_auth.authentication.TokenAuthentication",
-    "rest_framework.authentication.SessionAuthentication",
-)
 
 # Define where to find configuration files
 config_locations = [
